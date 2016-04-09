@@ -1,5 +1,5 @@
-require_relative './spec_helper'
-require_relative '../lib/heap_sort'
+require_relative '../spec_helper'
+require_relative '../../lib/structures/heap'
 
 describe Heap do
   describe "when initialized with no arguements" do

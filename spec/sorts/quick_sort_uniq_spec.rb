@@ -1,6 +1,6 @@
-require_relative './spec_helper'
+require_relative '../spec_helper'
 require_relative './shared_sort_spec'
-require_relative '../lib/quick_sort_uniq'
+require_relative '../../lib/sorts/quick_sort_uniq'
 
 options = {
   func_name: :quick_sort_uniq,

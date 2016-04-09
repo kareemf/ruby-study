@@ -1,5 +1,5 @@
-require_relative './spec_helper'
-require_relative '../lib/linked_list'
+require_relative '../spec_helper'
+require_relative '../../lib/structures/linked_list'
 
 describe Node do
   describe "when initialized with no arguements" do
