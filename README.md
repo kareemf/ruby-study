@@ -4,6 +4,9 @@ Practicing algorithms, data structures, and BDD just because.
 The simplest way to install dependencies is via Bundler:
 
 `gem install bundler`
+
+Followed by
+
 `bundle`
 
 ### Development
