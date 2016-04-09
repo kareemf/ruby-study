@@ -7,4 +7,4 @@ options = {
   test_duplcates: true
 }
 
-describe "Sorts.bubble_sort", &SharedSortSpec.run_spec(options)
+describe "bubble_sort", &SharedSortSpec.run_spec(options)
