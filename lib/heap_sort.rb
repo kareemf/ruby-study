@@ -2,6 +2,7 @@ require_relative './utils'
 
 class Heap
   include Comparable
+  include Utils
 
   def initialize(arr=[])
     @arr = []
