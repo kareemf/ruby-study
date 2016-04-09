@@ -13,3 +13,9 @@ Followed by
 To run tests upon file system updates
 
 `bundle exec guard`
+
+To run all tests once and generate coverage reports
+
+`bundle exec rake test`
+
+To view coverage reports, open `coverage/index.html` in a web browser
