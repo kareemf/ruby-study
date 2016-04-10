@@ -4,7 +4,7 @@ require_relative '../../lib/sorts/selection_sort'
 
 options = {
   func_name: :selection_sort,
-  test_duplcates: true
+  test_duplcates: false
 }
 
 describe "selection_sort", &SharedSortSpec.run_spec(options)
