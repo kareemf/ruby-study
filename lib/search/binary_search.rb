@@ -17,7 +17,13 @@ module Search
     return -1
   end
 
-  def self.sorted?(arr)
+  def self.sorted?(arr, method=:iterative)
+    return iterative_sorted?(arr) if method == :iterative
+    recursive_sorted?(arr)
+  end
+
+  private
+  def self.recursive_sorted?(arr)
     return true if arr.length < 2
 
     i = arr.length / 2
@@ -25,7 +31,7 @@ module Search
     right = arr[(i+1)...arr.length]
     mid = arr[i]
 
-    sorted_neighbors = sorted?(left) && sorted?(right)
+    sorted_neighbors = recursive_sorted?(left) && recursive_sorted?(right)
     return false if !sorted_neighbors
 
     sorted_increasing = (mid >= left.last)
@@ -37,5 +43,22 @@ module Search
     end
 
     sorted_increasing || sorted_decreasing
+  end
+
+  def self.iterative_sorted?(arr)
+    dir = nil # 0 -> decreasing, 1 -> increasing
+    for i in 0...(arr.length - 1) #  -1 -> prevent runoff when looking ahead
+      if !dir.nil?
+        newDir = 1 if arr[i] <= arr[i + 1]
+        newDir = 0 if arr[i] > arr[i + 1]
+        return false if dir != newDir
+      end
+
+      if i == 0
+        dir = 1 if arr[i] <= arr[i + 1]
+        dir = 0 if arr[i] > arr[i + 1]
+      end
+    end
+    true
   end
 end
