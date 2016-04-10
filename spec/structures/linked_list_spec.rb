@@ -130,58 +130,43 @@ describe LinkedList do
       @linked_list = LinkedList.new(@data)
     end
 
-    describe "(iteratively)" do
-      describe "when list has more than one element" do
-        it "should create a reversed copy" do
-          @linked_list.reverse.to_a.must_equal @data.reverse
-        end
-
-        it "should not mutate the original copy" do
-          reversed = @linked_list.reverse
-          @linked_list.to_a.must_equal @data
-        end
+    describe "when called with no optional (2nd) arg" do
+      it "should create a reversed copy" do
+        @linked_list.reverse.to_a.must_equal @data.reverse
       end
+    end
 
-      describe "when list is empty" do
-        it "to_a should be an empty array" do
-          @linked_list = LinkedList.new([])
-          @linked_list.reverse.to_a.must_equal []
+    def self.test_reversal(method)
+      Proc.new do
+        describe "when list has more than one element" do
+          it "should create a reversed copy" do
+            @linked_list.reverse(:resursive).to_a.must_equal @data.reverse
+          end
+
+          it "should not mutate the original copy" do
+            reversed = @linked_list.reverse(:resursive)
+            @linked_list.to_a.must_equal @data
+          end
         end
-      end
 
-      describe "when list has single element" do
-        it "to_a should contain only the item" do
-          @linked_list = LinkedList.new([1])
-          @linked_list.reverse.to_a.must_equal [1]
+        describe "when list is empty" do
+          it "to_a should be an empty array" do
+            @linked_list = LinkedList.new([])
+            @linked_list.reverse(:resursive).to_a.must_equal []
+          end
+        end
+
+        describe "when list has single element" do
+          it "to_a should contain only the item" do
+            @linked_list = LinkedList.new([1])
+            @linked_list.reverse(:resursive).to_a.must_equal [1]
+          end
         end
       end
     end
 
-    describe "(recursively)" do
-      describe "when list has more than one element" do
-        it "should create a reversed copy" do
-          @linked_list.reverse(:resursive).to_a.must_equal @data.reverse
-        end
-
-        it "should not mutate the original copy" do
-          reversed = @linked_list.reverse(:resursive)
-          @linked_list.to_a.must_equal @data
-        end
-      end
-
-      describe "when list is empty" do
-        it "to_a should be an empty array" do
-          @linked_list = LinkedList.new([])
-          @linked_list.reverse(:resursive).to_a.must_equal []
-        end
-      end
-
-      describe "when list has single element" do
-        it "to_a should contain only the item" do
-          @linked_list = LinkedList.new([1])
-          @linked_list.reverse(:resursive).to_a.must_equal [1]
-        end
-      end
+    [:iterative, :recursive].each do |method|
+      describe "(#{method})", &test_reversal(method)
     end
   end
 end
