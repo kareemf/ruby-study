@@ -7,14 +7,11 @@ module Sorts
     # conserider 1st element already sorted, i -> element to insert
     for i in 1...(arr.length)
       # 0..i-1 -> sorted
-      for j in (i-1).downto(0)
-        if arr[i] < arr[j]
-          Utils.swap(arr, i, j)
-          i = i -1
-        else
-          # element already in proper place
-          break
-        end
+      j = i - 1
+      while j >= 0 && arr[i] < arr[j]
+        Utils.swap(arr, i, j)
+        i = i -1
+        j = j -1
       end
     end
     arr
