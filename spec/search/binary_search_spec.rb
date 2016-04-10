@@ -74,7 +74,11 @@ describe "Search.binary_search" do
       Search.binary_search(1, [1]).must_equal 0
     end
   end
-
+  describe "when searching a unsorted array" do
+    it "should throw an error" do
+      ->{ Search.binary_search(1, [2, 1, 3]) }.must_raise ArgumentError
+    end
+  end
   describe "when searching a sorted array" do
     before { @data = [1, 2, 3, 5, 6, 7, 9, 10] }
 

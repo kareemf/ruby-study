@@ -1,6 +1,8 @@
 module Search
-  # input must be sorted
   def self.binary_search(value, arr)
+    # input must be sorted
+    raise ArgumentError if !sorted?(arr)
+
     left_bound = 0
     right_bound = arr.length
 
