@@ -16,4 +16,26 @@ module Search
     return left_bound if arr[left_bound] == value
     return -1
   end
+
+  def self.sorted?(arr)
+    return true if arr.length < 2
+
+    i = arr.length / 2
+    left = arr[0...i]
+    right = arr[(i+1)...arr.length]
+    mid = arr[i]
+
+    sorted_neighbors = sorted?(left) && sorted?(right)
+    return false if !sorted_neighbors
+
+    sorted_increasing = (mid >= left.last)
+    sorted_decreasing = (mid <= left.last)
+
+    if !right.first.nil? # ex arr[(i+1)...arr.length] -> [1,2][2...2] -> []
+      sorted_increasing = sorted_increasing && (mid <= right.first)
+      sorted_decreasing = sorted_decreasing && (mid >= right.first)
+    end
+
+    sorted_increasing || sorted_decreasing
+  end
 end
