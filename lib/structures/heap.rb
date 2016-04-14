@@ -10,15 +10,9 @@ class Heap
   end
 
   def pop
-    if @arr.length < 2
-      # want arr to be empty after operation if it has only one item
-      return @arr.pop
-    end
-
-    first = @arr.first
-    last = @arr.last
-    # pop the first element, move last element to root
-    @arr = @arr[1...@arr.length-1].unshift(last)
+    first = @arr.first # swap the 1st and last elements
+    Utils.swap(@arr, 0, @arr.length - 1) # truncate the last (formerly first) element
+    @arr = @arr[0...@arr.length-1]
     i = 0
     # move new root down so long as it is smaller than its largest child
     # stipulation: can't have a right child without having a left
