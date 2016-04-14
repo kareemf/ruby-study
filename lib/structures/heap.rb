@@ -46,10 +46,6 @@ class Heap
     out
   end
 
-  def <=> (other)
-    to_a <=> other.to_a
-  end
-
   def to_s
     @arr.to_s
   end
