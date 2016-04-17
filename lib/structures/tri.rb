@@ -1,16 +1,15 @@
 module Structures
   class Node
-    attr_accessor :id, :data, :type, :children
+    attr_accessor :id, :data, :children
 
-    def initialize(id=nil, type=nil)
+    def initialize(id=nil)
       @id = id
-      @type = type
       @data = nil
       @children = []
     end
 
     def to_s
-      "id: #{@id} data: #{@data} type: #{@type} children: #{@children.map { |c| c.to_s }}"
+      "id: #{@id} data: #{@data} children: #{@children.map(&:to_s)}"
     end
   end
   class Tri
@@ -24,15 +23,11 @@ module Structures
       Tri.validate_key!(key)
 
       node = @root
-      iterable = iterable_from_key(key)
+      iterable = enumerable_from_key(key)
       iterable.each do | item |
-        if (child = node.children.find {|child| child.type === key && child.id == item})
-          node = child
-        else
-          # didnt find a node with matching id, or found node with matching id
-          # but wrong type, ex wanted :a, :b, :c, got :a, :b, 'c'
-          return nil
-        end
+        child = node.children.find {|child| child.id == item}
+        return nil unless child
+        node = child
       end
 
       node.data
@@ -41,14 +36,14 @@ module Structures
     def []=(key, value)
       Tri.validate_key!(key)
 
-      iterable = iterable_from_key(key)
+      iterable = enumerable_from_key(key)
       node = @root
       iterable.each do | item |
-        if (child = node.children.find {|child| child.type === key && child.id == item})
+        child = node.children.find {|child| child.id == item}
+        if child
           node = child
         else
           new_node = Node.new(item)
-          new_node.type = key.class
           node.children.push(new_node)
           node = new_node
         end
@@ -63,16 +58,27 @@ module Structures
     end
 
     private
-    def iterable_from_key(key)
+    def enumerable_from_key(key)
       return nil if key.nil?
       return key if key.respond_to?(:each)
 
       case key
       when String
         key.split('')
-      when Symbol, Fixnum, Float
-        key.to_s.split('')
+      when Symbol
+        key.to_s.split('').map(&:to_sym)
+      when Fixnum, Float
+        key.to_s.split('').map do | i |
+          # handle signs and floating points by keeping them as srings
+          # ex: -1.2 -> ["-", 1, ".", 2]
+          next i.to_i if Tri.is_numeric?(i)
+          i
+        end
       end
+    end
+
+    def self.is_numeric?(s)
+      !!/\A[+-]?\d+\Z/.match(s)
     end
 
     def self.validate_key!(key)
