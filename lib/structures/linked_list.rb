@@ -1,21 +1,21 @@
-class Node
-  attr_reader :value
-  attr_accessor :next
-
-  def initialize(value)
-    @value = value
-    @next = nil
-  end
-
-  def to_s
-    "value: #{@value}, next: #{@next.value rescue 'nil'}"
-  end
-end
-
 class LinkedList
   include Comparable
 
   attr_accessor :head
+
+  class Node
+    attr_reader :value
+    attr_accessor :next
+
+    def initialize(value)
+      @value = value
+      @next = nil
+    end
+
+    def to_s
+      "value: #{@value}, next: #{@next.value rescue 'nil'}"
+    end
+  end
 
   def initialize(arr=nil)
     return (@head = nil) if arr.nil? or arr.length < 1

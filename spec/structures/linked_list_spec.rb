@@ -1,16 +1,16 @@
 require_relative '../spec_helper'
 require_relative '../../lib/structures/linked_list'
 
-describe Node do
+describe LinkedList::Node do
   describe "when initialized with no arguements" do
     it "should raise an exception" do
-      ->{ Node.new }.must_raise ArgumentError
+      ->{ LinkedList::Node.new }.must_raise ArgumentError
     end
   end
 
   describe "when initialized with a value" do
     before do
-      @node = Node.new(1)
+      @node = LinkedList::Node.new(1)
     end
 
     it "that should be its value" do
@@ -22,7 +22,7 @@ describe Node do
 
     describe "when assigned a next node" do
       before do
-        @next = Node.new(2)
+        @next = LinkedList::Node.new(2)
         @node.next = @next
       end
 
