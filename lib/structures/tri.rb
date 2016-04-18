@@ -47,8 +47,11 @@ module Structures
     end
 
     def inspect
-      k_v_pairs = traverse(@root)
-      pair_strs = k_v_pairs.map { |pair| "#{pair[0].inspect}=>#{pair[1].inspect}" }
+      k_v_pairs = to_a
+      pair_strs = k_v_pairs.map { |pair|
+        "#{pair[0].inspect}=>#{pair[1].inspect}"
+      }
+
       "{#{ pair_strs.join(', ') }}"
     end
 
@@ -65,13 +68,15 @@ module Structures
     end
 
     def length
-      traverse(@root).length
+      to_a.length
     end
 
     def keys
+      to_a.map { |k_v_pairs| k_v_pairs[0] }
     end
 
     def values
+      to_a.map { |k_v_pairs| k_v_pairs[1] }
     end
 
     private

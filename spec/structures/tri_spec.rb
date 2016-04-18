@@ -70,8 +70,15 @@ describe Structures::Tri do
   describe "on conversion" do
     before do
       @hash = {}
-      @hash[:key] = "value"
-      @tri[:key] = "value"
+
+      @hash[:key] = 0
+      @tri[:key] = 0
+      @hash["key"] = 1
+      @tri["key"] = 1
+      @hash[2] = 2
+      @tri[2] = 2
+      @hash[-3.0] = -3.0
+      @tri[-3.0] = -3.0
     end
 
     describe "to_h" do
@@ -83,6 +90,14 @@ describe Structures::Tri do
     describe "to_a" do
       it "must return an array" do
         @tri.to_a.must_equal @hash.to_a
+      end
+
+      it "must return the correct set of keys" do
+        @tri.keys.must_equal @hash.keys
+      end
+
+      it "must return the correct set of keys" do
+        @tri.values.must_equal @hash.values
       end
     end
   end
