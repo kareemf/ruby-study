@@ -48,6 +48,15 @@ module Structures
       (node.data = value)
     end
 
+    def inspect
+      k_v_pairs = traverse(@root)
+      pair_strs = k_v_pairs.map { |pair| "#{pair[0].inspect}=>#{pair[1].inspect}" }
+      "{#{ pair_strs.join(', ') }}"
+    end
+
+    def to_s
+      self.inspect
+    end
     def length
       # TODO
       return 0
@@ -55,8 +64,6 @@ module Structures
 
     private
     def enumerable_from_key(key)
-      return key if key.respond_to?(:each)
-
       case key
       when String
         key.split('')
@@ -69,9 +76,40 @@ module Structures
           next i.to_i if Tri.is_numeric?(i)
           i
         end
-        else
+      else
           [key]
       end
+    end
+
+    def key_from_enumerable(arr)
+      # the last item is the ambasador for what the array represents
+      # ex: ['-', 1, '.', 0].last == 0, meaning the input is numeric
+      case arr.last
+      when String
+        arr.join
+      when Symbol
+        arr.join.to_sym
+      when Fixnum, Float
+        conversion_method = arr.include?('.') ? :to_f : :to_i
+        arr.join.send(conversion_method)
+      else
+        arr.last
+      end
+    end
+
+    def traverse(node, path=[], k_v_pairs=[])
+      return k_v_pairs if node.nil?
+
+      # don't add the root to path
+      path.push(node.id) unless node.id.nil?
+
+      unless node.data.nil?
+        key = key_from_enumerable(path)
+        k_v_pairs.push([key, node.data])
+      end
+
+      node.children.map { |child| traverse(child, path.clone, k_v_pairs) }
+      k_v_pairs
     end
 
     def self.is_numeric?(s)
