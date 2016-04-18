@@ -69,13 +69,23 @@ describe Structures::Tri do
     end
   end
 
-  describe "on to_h" do
-    it "must return a valid Hash" do
-      h = {}
-      h[:key] = "value"
+  describe "on conversion" do
+    before do
+      @hash = {}
+      @hash[:key] = "value"
       @tri[:key] = "value"
+    end
 
-      @tri.to_h.must_equal h
+    describe "to_h" do
+      it "must return a valid Hash" do
+        @tri.to_h.must_equal @hash
+      end
+    end
+
+    describe "to_a" do
+      it "must return an array" do
+        @tri.to_a.must_equal @hash.to_a
+      end
     end
   end
 

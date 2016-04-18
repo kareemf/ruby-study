@@ -13,8 +13,6 @@ module Structures
     end
   end
   class Tri
-    @@valid_classes = [Fixnum, Float, Symbol, String]
-
     def initialize()
       @root = Node.new
     end
@@ -55,15 +53,26 @@ module Structures
     end
 
     def to_s
-      self.inspect
+      inspect
     end
 
     def to_h
       eval(to_s)
     end
+
+    def to_a
+      traverse(@root)
+    end
+
     def length
       # TODO
-      return 0
+      0
+    end
+
+    def keys
+    end
+
+    def values
     end
 
     private
