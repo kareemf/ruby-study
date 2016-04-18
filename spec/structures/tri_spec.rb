@@ -23,6 +23,12 @@ describe Structures::Tri do
       @tri.send(:enumerable_from_key, 1.0).must_equal [1, '.', 0]
       @tri.send(:enumerable_from_key, -1.0).must_equal ['-', 1, '.', 0]
     end
+
+    it "must return the key wrapped in an array for non-enumerable, non-string, non-numeric keys" do
+      o = Object.new
+      @tri.send(:enumerable_from_key, nil).must_equal [nil]
+      @tri.send(:enumerable_from_key, o).must_equal [o]
+    end
   end
 
   describe "on assignment/retrieval" do
@@ -57,11 +63,9 @@ describe Structures::Tri do
       @tri.length.must_equal 2
     end
 
-    describe "when assigning a non-enumerable, non-numberic key" do
-      it "must raise an exception" do
-        invalid_key = Object.new
-        ->{ @tri[invalid_key] }.must_raise ArgumentError
-      end
+    it "must allow a nil key" do
+      @tri[nil] = "nil"
+      @tri[nil].must_equal "nil"
     end
   end
 end

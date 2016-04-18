@@ -20,8 +20,6 @@ module Structures
     end
 
     def [](key)
-      Tri.validate_key!(key)
-
       node = @root
       iterable = enumerable_from_key(key)
       iterable.each do | item |
@@ -34,8 +32,6 @@ module Structures
     end
 
     def []=(key, value)
-      Tri.validate_key!(key)
-
       iterable = enumerable_from_key(key)
       node = @root
       iterable.each do | item |
@@ -59,7 +55,6 @@ module Structures
 
     private
     def enumerable_from_key(key)
-      return nil if key.nil?
       return key if key.respond_to?(:each)
 
       case key
@@ -74,20 +69,13 @@ module Structures
           next i.to_i if Tri.is_numeric?(i)
           i
         end
+        else
+          [key]
       end
     end
 
     def self.is_numeric?(s)
       !!/\A[+-]?\d+\Z/.match(s)
-    end
-
-    def self.validate_key!(key)
-      valid_key = key.respond_to?(:each) || @@valid_classes.include?(key.class)
-      Tri.raise_key_error unless valid_key
-    end
-
-    def self.raise_key_error
-      raise ArgumentError.new("keys must respond to :each or be numeric")
     end
   end
 end
