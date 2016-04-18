@@ -57,6 +57,10 @@ module Structures
     def to_s
       self.inspect
     end
+
+    def to_h
+      eval(to_s)
+    end
     def length
       # TODO
       return 0

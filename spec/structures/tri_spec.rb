@@ -69,6 +69,16 @@ describe Structures::Tri do
     end
   end
 
+  describe "on to_h" do
+    it "must return a valid Hash" do
+      h = {}
+      h[:key] = "value"
+      @tri[:key] = "value"
+
+      @tri.to_h.must_equal h
+    end
+  end
+
   describe "representation" do
     it "must be represented by an empty hash when empty" do
       @tri.to_s.must_equal "{}"
