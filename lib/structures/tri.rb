@@ -65,8 +65,7 @@ module Structures
     end
 
     def length
-      # TODO
-      0
+      traverse(@root).length
     end
 
     def keys

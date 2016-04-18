@@ -51,7 +51,6 @@ describe Structures::Tri do
     end
 
     it "must count the pair in its length" do
-      skip
       @tri.length.must_equal 1
     end
 
@@ -59,7 +58,6 @@ describe Structures::Tri do
       @tri["key"].must_be_nil
       @tri["key"] = "another value"
       @tri[:key].must_equal "value"
-      skip
       @tri.length.must_equal 2
     end
 
