@@ -1,18 +1,27 @@
 module Structures
-  class Node
-    attr_accessor :id, :data, :children
-
-    def initialize(id=nil)
-      @id = id
-      @data = nil
-      @children = []
-    end
-
-    def to_s
-      "id: #{@id} data: #{@data} children: #{@children.map(&:to_s)}"
-    end
-  end
   class Tri
+    class Node
+      attr_accessor :id, :data, :children
+
+      def initialize(id=nil)
+        @id = id
+        @data = nil
+        @children = []
+      end
+
+      def inspect
+        {
+          :id => @id,
+          :data => @data,
+          :children => @children.map(&:inspect)
+        }.to_s
+      end
+
+      def to_s
+        inspect
+      end
+    end
+
     def initialize()
       @root = Node.new
     end
